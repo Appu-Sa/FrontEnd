@@ -83,19 +83,21 @@ const menuSlice = createSlice({
         const { menuId, parentId } = action.payload
         const menu = state.menus.find(m => m.id === menuId)
         if (menu) {
-          if (parentId) {
-            const addToChildren = (items: MenuItem[]) => {
-              for (const item of items) {
-                if (item.id === parentId) {
-                  item.children.push(action.payload)
-                  return true
-                }
-                if (item.children && addToChildren(item.children)) {
-                  return true
-                }
+          const addToChildren = (items: MenuItem[]): boolean => {
+            for (const item of items) {
+              if (item.id === parentId) {
+                if (!item.children) item.children = [];
+                item.children.push(action.payload)
+                return true
               }
-              return false
+              if (item.children && addToChildren(item.children)) {
+                return true
+              }
             }
+            return false
+          }
+          
+          if (parentId) {
             addToChildren(menu.items)
           } else {
             menu.items.push(action.payload)

@@ -15,5 +15,15 @@ const config: Config = {
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      backgroundColor: ['last'],
+      borderColor: ['last'],
+    },
+  },
+  extend: {
+    // Custom utilities if needed
+  }
 };
+
 export default config;
