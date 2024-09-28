@@ -359,8 +359,8 @@ const MenuItemDetails: React.FC<MenuItemDetailsProps> = ({
     setParentName(getParentName(item.parentId));
   }, [item, getParentName]);
 
-  const handleSave = () => {
-    onUpdate({ ...item, name });
+  const handleSave = (name: string) => {
+    onUpdate({ ...item, name});
   };
 
   return (
@@ -401,7 +401,7 @@ const MenuItemDetails: React.FC<MenuItemDetailsProps> = ({
         />
       </div>
       <button
-        onClick={handleSave}
+        onClick={()=>handleSave(name)}
         className="w-[263px] h-[52px] text-[14px] px-4 py-2 bg-blue-600 text-white  rounded-[48px] hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         Save

@@ -13,14 +13,21 @@ const initialState: MenuState = {
   error: null,
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
+// Ensure the API_URL is defined
+if (!API_URL) {
+  console.log('API_URL is not defined in the environment variables')
+}
+
 export const fetchMenus = createAsyncThunk('menu/fetchMenus', async () => {
-  const response = await fetch('http://localhost:3001/menus')
+  const response = await fetch(`${API_URL}/menus`)
   if (!response.ok) throw new Error('Failed to fetch menus')
   return response.json()
 })
 
 export const createMenu = createAsyncThunk('menu/createMenu', async (menuData: { name: string }) => {
-  const response = await fetch('http://localhost:3001/menus/menu', {
+  const response = await fetch(`${API_URL}/menus`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(menuData),
@@ -30,7 +37,7 @@ export const createMenu = createAsyncThunk('menu/createMenu', async (menuData: {
 })
 
 export const addMenuItem = createAsyncThunk('menu/addMenuItem', async (itemData: Omit<MenuItem, 'id' | 'children'>) => {
-  const response = await fetch('http://localhost:3001/menus', {
+  const response = await fetch(`${API_URL}/menus`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(itemData),
@@ -40,7 +47,7 @@ export const addMenuItem = createAsyncThunk('menu/addMenuItem', async (itemData:
 })
 
 export const updateMenuItem = createAsyncThunk('menu/updateMenuItem', async ({ id, name }: { id: string, name: string }) => {
-  const response = await fetch(`http://localhost:3001/menus/${id}`, {
+  const response = await fetch(`${API_URL}/menus/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name }),
@@ -50,7 +57,7 @@ export const updateMenuItem = createAsyncThunk('menu/updateMenuItem', async ({ i
 })
 
 export const deleteMenuItem = createAsyncThunk('menu/deleteMenuItem', async (id: string) => {
-  const response = await fetch(`http://localhost:3001/menus/${id}`, {
+  const response = await fetch(`${API_URL}/menus/${id}`, {
     method: 'DELETE',
   })
   if (!response.ok) throw new Error('Failed to delete menu item')
