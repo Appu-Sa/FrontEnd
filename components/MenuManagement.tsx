@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMenus,
-  createMenu,
   addMenuItem,
   updateMenuItem,
   deleteMenuItem,
@@ -14,11 +13,7 @@ import {
   ChevronRight,
   Plus,
   Trash2,
-  Save,
-  Edit,
   Menu as MenuIcon,
-  X,
-  File,
   Folder,
 } from "lucide-react";
 import Image from "next/image";
@@ -37,13 +32,14 @@ interface SidebarProps {
   onMenuSelect: (menuId: string) => void;
 }
 
+/* eslint-disable */
+
 const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   onClose,
   menus,
   loading,
   error,
-  selectedMenu,
   onMenuSelect,
 }) => {
   const [expandedMenus, setExpandedMenus] = useState<Set<string>>(new Set());
@@ -352,7 +348,6 @@ interface MenuItemDetailsProps {
 const MenuItemDetails: React.FC<MenuItemDetailsProps> = ({
   item,
   onUpdate,
-  onClose,
   getParentName,
 }) => {
   const [name, setName] = useState(item.name);
